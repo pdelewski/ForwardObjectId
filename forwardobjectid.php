@@ -51,6 +51,7 @@ function forwardObjectId(mixed $old_object, mixed $new_object, Context &$context
    }
 );
 
+// mimics PSR-15 RequestHandlerInterface::handle
 function handle(BasicRequest $request, Context &$context) {
   $span = new Span;
   $span->name = "undefined";
@@ -59,6 +60,7 @@ function handle(BasicRequest $request, Context &$context) {
   return $request;
 }
 
+// mimics Slim RoutingMiddleware::performRouting
 function performRouting(BasicRequest $request, Context &$context) {
   if (array_key_exists(spl_object_id($request), $context->spans)) {
     $context->spans[spl_object_id($request)]->name = "root";
